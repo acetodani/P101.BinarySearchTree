@@ -27,18 +27,21 @@ Done:
   empty, it drops the node in and sets the parent pointer; otherwise it
   recurses down that side. Duplicates going left is intentional, the interface
   says duplicates get counted separately.
+- `size()` plus a `sizeHelper()` - counts recursively instead of keeping a
+  counter field around. Walks the whole tree and returns
+  `1 + left + right`. Went this way because there's no counter to forget to
+  update later when I add removal, though it does mean size is O(n) instead
+  of O(1).
+- `isEmpty()` - just checks whether `root` is null.
+- `clear()` - sets `root` to null and lets the garbage collector reclaim the
+  rest of the nodes, since nothing outside the tree is holding references to
+  them.
 
 Still to do:
 
-- Actually declare the `size` field. `add` already increments it, so the class
-  won't compile until I add it.
 - `contains(Comparable<T> find)` - stubbed out, returns false right now.
   Plan is a loop (or recursive helper) that walks down comparing values, same
   left/right logic as insert.
-- `size()` - stubbed, returns 0. Should just return the counter once it exists.
-- `isEmpty()` - stubbed, returns false. Probably `size == 0` or `root == null`.
-- `clear()` - empty. Set `root` back to null and reset the counter, let the
-  garbage collector deal with the rest.
 - Tests. Need to write the tester class and check the shapes with the
   traversal methods, plus edge cases: empty tree, single node, all duplicates,
   values inserted in already-sorted order.

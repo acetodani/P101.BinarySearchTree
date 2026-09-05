@@ -15,9 +15,8 @@ public class BinarySearchTree<T extends Comparable<T>> implements SortedCollecti
         if (root == null) {
             root = newNode;
         } else {
-             addHelper(newNode, root);
+            addHelper(newNode, root);
         }
-        size++;
     }
 
     // contains()
@@ -27,17 +26,34 @@ public class BinarySearchTree<T extends Comparable<T>> implements SortedCollecti
 
     // size()
     public int size() {
-        return 0;
+        BinaryNode<T> current = root;
+
+        if (current == null) {
+            return 0;
+        }
+
+        return sizeHelper(current);
+    }
+
+    // sizeHelper()
+    protected int sizeHelper(BinaryNode<T> current) {
+        if (current == null) {
+            return 0;
+        }
+        return 1 + sizeHelper(current.downLeft()) + sizeHelper(current.downRight());
     }
 
     // isEmpty()
     public boolean isEmpty() {
+        if (root == null) {
+            return true;
+        }
         return false;
     }
 
     // clear()
     public void clear() {
-
+        root = null;
     }
 
     /**
